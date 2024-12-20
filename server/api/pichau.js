@@ -26,6 +26,7 @@ export default defineEventHandler(async (event) => {
       url: product.querySelector(".MuiGrid-item a")?.getAttribute("href"),
       title: product.querySelector(".MuiTypography-h6")?.textContent,
       price: product.querySelector(".MuiCardContent-root div div div div")?.textContent,
+      realPrice: product.querySelector('.MuiCardContent-root > div > div > div > div:nth-child(3)')?.textContent,
       site: 'Pichau'
     }));
   });
