@@ -7,28 +7,41 @@ export default defineEventHandler(async (event) => {
     return { message: 'Nenhum produto especificado para buscar' };
   }
 
-  // Codificando o nome do produto na URL para evitar problemas com espaços ou caracteres especiais
   const url = `https://www.terabyteshop.com.br/busca?str=${encodeURIComponent(query)}`;
 
-  const browser = await puppeteer.launch({ headless: false });
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-blink-features=AutomationControlled',
+      '--window-size=1920,1080',
+    ],
+    defaultViewport: null,
+  });
+
   const page = await browser.newPage();
-  await page.goto(url);
+  await page.setUserAgent(
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
+  );
+
+  await page.goto(url, { waitUntil: 'domcontentloaded' });
 
   try {
     await page.waitForSelector('.close', { timeout: 5000 });
     await page.click('.close');
-  } catch (error) {
+  } catch {
     console.log('Modal não encontrado ou já fechado');
   }
 
   const data = await page.evaluate(() => {
-    const products = Array.from(document.querySelectorAll(".product-item"));
+    const products = Array.from(document.querySelectorAll('.product-item'));
 
     return products.map((product) => ({
-      url: product.querySelector(".product-item .product-item__grid .product-item__box .product-item__image")?.getAttribute("href"),
-      title: product.querySelector(".product-item__name")?.getAttribute("title"),
-      price: product.querySelector(".product-item__new-price span")?.textContent,
-      site: 'Terabyte'
+      url: product.querySelector('.product-item__image')?.getAttribute('href'),
+      title: product.querySelector('.product-item__name')?.getAttribute('title'),
+      price: product.querySelector('.product-item__new-price span')?.textContent,
+      site: 'Terabyte',
     }));
   });
 
