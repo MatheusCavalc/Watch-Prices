@@ -12,27 +12,49 @@
         </div>
 
         <!-- Resultados Exatos -->
-        <h2 class="text-xl font-semibold mt-6 mb-2">Resultados Exatos</h2>
+        <h2 class="text-xl font-semibold mt-6 mb-2">Resultados Exatos:</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <!-- Produtos -->
             <div v-for="(product, index) in exactMatches" :key="index" class="bg-white border rounded-md p-4 shadow-md">
                 <img :src="product.image" alt="Imagem do produto" class="w-full h-48 object-cover rounded-md mb-4" />
                 <h3 class="text-lg font-semibold mb-2">{{ product.title }}</h3>
-                <p class="text-xl font-bold text-blue-600 mb-4">{{ product.price }}</p>
+
+                <p v-if="product.site == 'Kabum'" class="text-xl font-bold text-blue-600 mb-4">{{ product.price }}</p>
+                <p v-if="product.site == 'Terabyte'" class="text-xl font-bold text-blue-600 mb-4">
+                    <span v-if="product.price">{{ product.price }}</span>
+                    <span v-else>Indisponível</span>
+                </p>
+                <p v-if="product.site == 'Pichau'" class="text-xl font-bold text-blue-600 mb-4">
+                    <span v-if="product.price.includes('por')">{{ product.realPrice }}</span>
+                    <span v-else>{{ product.price }}</span>
+                </p>
+
                 <p class="mb-4 text-gray-600">{{ product.site }}</p>
                 <a :href="product.url" target="_blank" class="text-blue-500 hover:text-blue-700 underline">Ver
                     Produto</a>
             </div>
         </div>
 
+        <div class="my-4 h-1 w-full rounded-full bg-blue-500"></div>
+
         <!-- Outras Opções -->
-        <h2 class="text-xl font-semibold mt-6 mb-2">Outras Opções</h2>
+        <h2 class="text-xl font-semibold mt-6 mb-2">Outras Opções:</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <!-- Produtos -->
             <div v-for="(product, index) in otherOptions" :key="index" class="bg-white border rounded-md p-4 shadow-md">
                 <img :src="product.image" alt="Imagem do produto" class="w-full h-48 object-cover rounded-md mb-4" />
                 <h3 class="text-lg font-semibold mb-2">{{ product.title }}</h3>
-                <p class="text-xl font-bold text-blue-600 mb-4">{{ product.price }}</p>
+
+                <p v-if="product.site == 'Kabum'" class="text-xl font-bold text-blue-600 mb-4">{{ product.price }}</p>
+                <p v-if="product.site == 'Terabyte'" class="text-xl font-bold text-blue-600 mb-4">
+                    <span v-if="product.price">{{ product.price }}</span>
+                    <span v-else>Indisponível</span>
+                </p>
+                <p v-if="product.site == 'Pichau'" class="text-xl font-bold text-blue-600 mb-4">
+                    <span v-if="product.price.includes('por')">{{ product.realPrice }}</span>
+                    <span v-else>{{ product.price }}</span>
+                </p>
+
                 <p class="mb-4 text-gray-600">{{ product.site }}</p>
                 <a :href="product.url" target="_blank" class="text-blue-500 hover:text-blue-700 underline">Ver
                     Produto</a>
