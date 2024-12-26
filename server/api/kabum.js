@@ -19,8 +19,9 @@ export default defineEventHandler(async (event) => {
         const products = Array.from(document.querySelectorAll(".productCard"));
 
         return products.map((product) => ({
-            url: product.querySelector(".productLink")?.getAttribute("href"),
+            url: 'https://www.kabum.com.br/' + product.querySelector(".productLink")?.getAttribute("href"),
             title: product.querySelector(".nameCard")?.textContent,
+            image: product.querySelector(".imageCard")?.getAttribute("src"),
             price: product.querySelector(".priceCard")?.textContent,
             site: 'Kabum'
         }));

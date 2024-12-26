@@ -56,6 +56,7 @@ export default defineEventHandler(async (event) => {
     return products.map((product) => ({
       url: product.querySelector(".MuiGrid-item a")?.getAttribute("href"),
       title: product.querySelector(".MuiTypography-h6")?.textContent.trim(),
+      image: product.querySelector('.lazyload-wrapper div img')?.getAttribute("src"),
       price: product.querySelector(".MuiCardContent-root div div div div")?.textContent.trim(),
       realPrice: product.querySelector('.MuiCardContent-root > div > div > div > div:nth-child(3)')?.textContent.trim(),
       site: 'Pichau',

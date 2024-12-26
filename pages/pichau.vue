@@ -13,49 +13,43 @@
 
     <!-- Resultados Exatos -->
     <h2 class="text-xl font-semibold mt-6 mb-2">Resultados Exatos</h2>
-    <table class="min-w-full border-collapse">
-      <thead>
-        <tr class="bg-gray-100">
-          <th class="py-2 px-4 text-left border-b">Título</th>
-          <th class="py-2 px-4 text-left border-b">Preço</th>
-          <th class="py-2 px-4 text-left border-b">Site</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(product, index) in exactMatches" :key="index" class="border-b">
-          <td class="py-2 px-4">{{ product.title }}</td>
-          <td class="py-2 px-4">
-            <span v-if="product.price.includes('por')">{{ product.realPrice }}</span>
-            <span v-else>{{ product.price }}</span>
-          </td>
-          <td class="py-2 px-4">{{ product.site }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div v-for="(product, index) in exactMatches" :key="index" class="bg-white border rounded-md p-4 shadow-md">
+        <!-- Imagem do produto -->
+        <img :src="product.image" alt="Imagem do produto" class="w-full h-48 object-cover rounded-md mb-4" />
+        <!-- Título do produto -->
+        <h3 class="text-lg font-semibold mb-2">{{ product.title }}</h3>
+        <!-- Preço do produto -->
+        <p class="text-xl font-bold text-blue-600 mb-4">
+          <span v-if="product.price.includes('por')">{{ product.realPrice }}</span>
+          <span v-else>{{ product.price }}</span>
+        </p>
+        <!-- Site do produto -->
+        <p class="mb-4 text-gray-600">{{ product.site }}</p>
+        <!-- Link para o produto -->
+        <a :href="product.url" target="_blank" class="text-blue-500 hover:text-blue-700 underline">Ver Produto</a>
+      </div>
+    </div>
 
     <!-- Outras Opções -->
     <h2 class="text-xl font-semibold mt-6 mb-2">Outras Opções</h2>
-    <table class="min-w-full border-collapse">
-      <thead>
-        <tr class="bg-gray-100">
-          <th class="py-2 px-4 text-left border-b">Título</th>
-          <th class="py-2 px-4 text-left border-b">Preço</th>
-          <th class="py-2 px-4 text-left border-b">Site</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(product, index) in otherOptions" :key="index" class="border-b">
-          <td class="py-2 px-4">{{ product.title }}</td>
-          <td class="py-2 px-4">
-            <span v-if="product.price.includes('por')">{{ product.realPrice }}</span>
-            <span v-else>{{ product.price }}</span>
-          </td>
-          <td class="py-2 px-4">{{ product.site }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div v-for="(product, index) in otherOptions" :key="index" class="bg-white border rounded-md p-4 shadow-md">
+        <!-- Imagem do produto -->
+        <img :src="product.image" alt="Imagem do produto" class="w-full h-48 object-cover rounded-md mb-4" />
+        <!-- Título do produto -->
+        <h3 class="text-lg font-semibold mb-2">{{ product.title }}</h3>
+        <!-- Preço do produto -->
+        <p class="text-xl font-bold text-blue-600 mb-4">{{ product.price }}</p>
+        <!-- Site do produto -->
+        <p class="mb-4 text-gray-600">{{ product.site }}</p>
+        <!-- Link para o produto -->
+        <a :href="product.url" target="_blank" class="text-blue-500 hover:text-blue-700 underline">Ver Produto</a>
+      </div>
+    </div>
   </div>
 </template>
+
 
 <script setup>
 import { ref, computed } from 'vue';

@@ -40,6 +40,7 @@ export default defineEventHandler(async (event) => {
     return products.map((product) => ({
       url: product.querySelector('.product-item__image')?.getAttribute('href'),
       title: product.querySelector('.product-item__name')?.getAttribute('title'),
+      image: product.querySelector('.image-thumbnail')?.getAttribute('src'),
       price: product.querySelector('.product-item__new-price span')?.textContent,
       site: 'Terabyte',
     }));
