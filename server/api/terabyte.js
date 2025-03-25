@@ -7,7 +7,9 @@ export default defineEventHandler(async (event) => {
     return { message: 'Nenhum produto especificado para buscar' };
   }
 
-  const url = `https://www.terabyteshop.com.br/busca?str=${encodeURIComponent(query)}`;
+  //const url = `https://www.terabyteshop.com.br/busca?str=${encodeURIComponent(query)}`;
+
+  const url = `https://consultapublica.sefaz.ce.gov.br/sintegra/consultar?tipdocumento=2&numcnpjcgf=${encodeURIComponent(query)}`
 
   const browser = await puppeteer.launch({
     headless: true,
@@ -26,6 +28,8 @@ export default defineEventHandler(async (event) => {
   );
 
   await page.goto(url, { waitUntil: 'domcontentloaded' });
+
+  return url
 
   try {
     await page.waitForSelector('.close', { timeout: 5000 });
